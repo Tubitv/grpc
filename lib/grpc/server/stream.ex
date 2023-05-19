@@ -17,6 +17,8 @@ defmodule GRPC.Server.Stream do
     * `:local`             - local data initialized by user
   """
 
+  require Logger
+
   @type t :: %__MODULE__{
           server: atom(),
           service_name: String.t(),
@@ -58,5 +60,12 @@ defmodule GRPC.Server.Stream do
     data = codec.encode(reply)
     adapter.send_reply(stream.payload, data, opts)
     stream
+  rescue
+    error ->
+      Logger.error("[GRPC.Server] >> #{Exception.format(:error, error)}",
+        extra: %{
+          reply: reply
+        }
+      )
   end
 end
