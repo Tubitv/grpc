@@ -67,5 +67,7 @@ defmodule GRPC.Server.Stream do
           reply: reply
         }
       )
+
+      raise error
   end
 end
